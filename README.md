@@ -1,70 +1,205 @@
-# Getting Started with Create React App
+# SuperService
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Super Service is a cutting-edge web application designed to provide a wide range of convenient services to urban dwellers. Built on the MERN stack (MongoDB, Express.js, React.js, Node.js), Super Service harnesses the power of modern web technologies to deliver a seamless and user-friendly experience.
 
-## Available Scripts
+With the rapid growth of urbanization, Super Service aims to address the diverse needs of individuals residing in bustling cities. Whether it's transportation, food delivery, home services, or more, Super Service brings together an array of services under one platform, streamlining the urban lifestyle.
 
-In the project directory, you can run:
+# use this credentials for demo:
+    - email: user@g.com
+    - password: 12121212
+For Full Experiance {DEMO}
+# Development Details
 
-### `npm start`
+![Dashboard Page](./media/home.jpg)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Work Proof
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+More detailed information about the application extensive [Features](./userguide.md#features), and intutive usage can be found in the [User Guide](./userguide.md) and [Screenshots](./screenshots.md) file.
 
-### `npm test`
+## Architecure and Technical Details
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The project is developed using the following MERN technologies and frameworks:
 
-### `npm run build`
+- Frontend: ReactJs, Redux, JavaScript, HTML, CSS
+- Backend: Node.js with Express, JWT
+- Database: mongoDB
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Team
+The project is developed from scratch by the team members and no code was copied from any other source. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Name | Github Handle | Image |
+| --- | --- | --- |
+| Lokesh Kumar M | @LokeshKumar-Dev  | ![Loki](./media/loki.jpeg=300x200) |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Mongo Database Models
 
-### `npm run eject`
+The application consists of the following entities:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. User:
+    - First Name: String
+    - Last Name: String
+    - Date of Birth: Date
+    - Salary: Number
+    - Email: String (required, unique)
+    - Image: String
+    - Password: String (required)
+    - Currency: String (default: "INR")
+    - Expense: Number (default: 0)
+    - Expense List: Array (default: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    - Income: Number (default: 0)
+    - Income List: Array (default: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    - OTP: String (default: "")
+    - Is Verified: Boolean (default: false)
+    
+2. Product:
+    - name: String (required)
+    - by: String (required)
+    - image: String
+    - description: String (required)
+    - reviews: [reviewSchema]
+    - rating: Number (required, default: 0)
+    - numReviews: Number (required, default: 0)
+    - price: Number (required, default: 0)
+    - time: String (required, default: "10 mins")
+    - cId: Number (required, default: 0)
+    - category: 
+        - id: Number (required)
+        - name: String (required)
+        - image: String (required)
+        - description: String (required)
+        - category: 
+          - type: mongoose.Schema.Types.ObjectId,
+          - required: true,
+          - ref: "Category",
+  
+3. order:
+    - user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      }
+    - orderItems: [{
+          name: { type: String, required: true },
+          qty: { type: Number, required: true },
+          image: { type: String, required: true },
+          price: { type: Number, required: true },
+          by: { type: String, required: true },
+          product: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Product",
+          }
+        }
+      ]
+    - vendors: Array
+    - shippingAddress: {
+        houseNumber: String,
+        address: { type: String, required: true },
+        city: { type: String, required: true },
+        postalCode: { type: String, required: true },
+        country: { type: String, required: true },
+      }
+    - paymentMethod: {
+        type: String,
+        required: true,
+        default: "PayPal",
+      }
+    - paymentResult: {
+        id: String,
+        status: String,
+        update_time: String,
+        email_address: String,
+      }
+    - taxPrice: {
+        type: Number,
+        required: true,
+        default: 0.0,
+      }
+    - status: {
+        type: Number,
+        required: true,
+        default: -1,
+        validate: function () {
+          return (this.status >= -1 && this.status < 5);
+        }
+      }
+    - shippingPrice: {
+        type: Number,
+        required: true,
+        default: 0.0,
+      }
+    - totalPrice: {
+        type: Number,
+        required: true,
+        default: 0.0,
+      }
+    - isPaid: {
+        type: Boolean,
+        required: true,
+        default: false,
+      }
+    - paidAt: Date
+    - isDelivered: {
+        type: Boolean,
+        required: true,
+        default: false,
+      }
+    - deliveredAt: Date
+    - scheduledDate: {
+        type: Date,
+        required: true,
+      }
+    - scheduledTime: {
+        type: Date,
+        required: true,
+      }
+    
+##  Installation and Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Clone the repository:
+   - Open your command-line interface (CLI) or terminal.
+   - Navigate to the directory where you want to clone the repository using the cd command.
+   - Once you are in the desired directory, use the git clone command followed by the repository URL.
+   - Wait for the cloning process to complete.
+   - You have successfully cloned the directory!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 2. Install dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Prerequisites
+Make sure you have [Node.js](https://nodejs.org) and [npm](https://www.npmjs.com) (Node Package Manager) installed on your machine.
 
-## Learn More
+#### Steps
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Ensure cloning process above is completed without any error. .
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Navigate to the project's root directory in your command-line interface (CLI) or terminal.
 
-### Code Splitting
+4. Switch to folder `superservice` and run the following command to install the project dependencies:
+   ```shell
+   npm install
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 3. Start the API server:
+- create a .env file in root of `superserver` folder with following entries
+```shell
+#Mongo Auth value
+db_USERNAME = ""
+db_PASSWORD = ""
 
-### Analyzing the Bundle Size
+JWT_SECRET = ""
+EMAIL = ""
+PASSWORD = ""
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+PORT = 5000
+```
+- Switch to folder `superserver` and run the following command to run API server
+```shell
+npm start
+```
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 4. Start the UI server:
+- Switch to folder `superservervice` and run the following command to run the UI server
+```shell
+npm start
+```
